@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harvinder Singh — SOC Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#03070a;--bg2:#070f15;--card:#080f18;
+  --border:#112030;--surface:#0a1520;
+  --accent:#0af0ff;--green:#7fff6b;--red:#ff4d6d;
+  --text:#ddeeff;--muted:#5a7a8a;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cdot{position:fixed;top:0;left:0;width:9px;height:9px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transition:width .15s,height .15s,background .15s}
+#cring{position:fixed;top:0;left:0;width:38px;height:38px;border:1.5px solid rgba(10,240,255,.4);border-radius:50%;pointer-events:none;z-index:9998;transition:width .25s,height .25s,border-color .25s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:16px 52px;background:rgba(3,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.16em}
+.logo b{color:var(--text);font-weight:400}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-decoration:none;letter-spacing:.18em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.open-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);border:1px solid var(--green);padding:7px 16px;letter-spacing:.15em;text-transform:uppercase;animation:gpulse 2.5s ease infinite}
+@keyframes gpulse{0%,100%{box-shadow:0 0 0 0 rgba(127,255,107,.3)}50%{box-shadow:0 0 0 7px rgba(127,255,107,0)}}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 440px;gap:60px;align-items:center;padding:120px 52px 80px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(10,240,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(10,240,255,.03) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 70% 70% at 75% 50%,#000 30%,transparent 100%);pointer-events:none}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:.22em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:ldot 1.8s ease infinite;flex-shrink:0}
+@keyframes ldot{0%,100%{opacity:1}50%{opacity:.2}}
+h1.hname{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,8.5vw,124px);line-height:.9;letter-spacing:.03em;margin-bottom:18px}
+h1.hname .l1{display:block;color:var(--text)}
+h1.hname .l2{display:block;color:transparent;-webkit-text-stroke:2px var(--accent)}
+.hero-role{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);margin-bottom:24px;letter-spacing:.06em}
+.hero-bio{font-size:15px;line-height:1.8;color:var(--muted);max-width:480px;font-weight:300;margin-bottom:36px}
+.hero-bio strong{color:var(--text);font-weight:500}
+.hbtns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:13px 28px;text-decoration:none;display:inline-block;transition:all .25s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+.btn-a{background:var(--accent);color:#000;font-weight:600}
+.btn-a:hover{background:var(--green);box-shadow:0 8px 28px rgba(10,240,255,.25)}
+.btn-b{border:1px solid var(--border);color:var(--muted);background:transparent}
+.btn-b:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TERMINAL */
+.term{background:var(--card);border:1px solid var(--border);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6);position:relative;z-index:2}
+.term-bar{background:var(--surface);padding:10px 16px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--border)}
+.td{width:9px;height:9px;border-radius:50%}
+.td.r{background:#ff5f57}.td.y{background:#febc2e}.td.g{background:#27c840}
+.tlabel{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-left:6px;letter-spacing:.08em}
+.term-body{padding:20px;min-height:260px;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.9}
+.trow{display:flex;gap:8px;margin-bottom:1px;flex-wrap:wrap}
+.tp{color:var(--green);white-space:nowrap}
+.tc{color:var(--text)}.to{color:var(--muted)}.ta{color:var(--accent)}.tw{color:var(--red)}.ts{color:var(--green)}
+.tcur{display:inline-block;width:7px;height:13px;background:var(--accent);animation:cblink 1s step-end infinite;vertical-align:middle;margin-left:2px}
+@keyframes cblink{50%{opacity:0}}
+
+/* TICKER */
+.ticker-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(10,240,255,.04);padding:10px 0}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 28s linear infinite}
+.tick-i{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.18em;text-transform:uppercase;padding:0 32px}
+.tick-i em{color:rgba(10,240,255,.25);font-style:normal;margin:0 10px}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:88px 52px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:52px}
+.sec-n{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--red);letter-spacing:.14em}
+.sec-t{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:.04em}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* EXPERIENCE */
+.exp-item{display:grid;grid-template-columns:190px 1fr;border-bottom:1px solid var(--border);padding:36px 0}
+.exp-item:last-child{border-bottom:none}
+.exp-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.exp-co{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);line-height:1.6}
+.exp-now{display:inline-block;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 10px;border:1px solid var(--green);color:var(--green);letter-spacing:.1em;text-transform:uppercase}
+.exp-role{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.04em;margin-bottom:10px}
+.exp-desc{font-size:14px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:14px}
+.exp-ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.exp-ul li{font-size:13px;color:var(--muted);font-weight:300;padding-left:18px;position:relative;line-height:1.6}
+.exp-ul li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:11px}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.proj-card{background:var(--card);border:1px solid var(--border);padding:28px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.proj-card:hover{border-color:rgba(10,240,255,.4);transform:translateY(-3px)}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.proj-card:hover::before{transform:scaleX(1)}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.proj-name{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.04em}
+.proj-gh{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent);border:1px solid rgba(10,240,255,.3);padding:5px 12px;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;transition:background .2s}
+.proj-gh:hover{background:rgba(10,240,255,.08)}
+.proj-desc{font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
+.proj-feats{display:flex;flex-direction:column;gap:4px}
+.proj-feat{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);padding-left:16px;position:relative;line-height:1.6}
+.proj-feat::before{content:'→';position:absolute;left:0;color:var(--accent)}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.ptag{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 9px;background:rgba(10,240,255,.05);border:1px solid rgba(10,240,255,.15);color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
+.skill-card{background:var(--card);padding:28px;transition:background .25s;position:relative;overflow:hidden}
+.skill-card:hover{background:#0b1720}
+.skill-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .35s}
+.skill-card:hover::after{width:100%}
+.skill-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.04em;margin-bottom:12px}
+.skill-tags{display:flex;flex-wrap:wrap;gap:7px}
+.stag{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:4px 10px;border:1px solid var(--border);color:var(--muted);letter-spacing:.08em;text-transform:uppercase;transition:border-color .2s,color .2s}
+.skill-card:hover .stag{border-color:rgba(10,240,255,.25);color:var(--accent)}
+
+/* CERTS */
+.certs-list{display:flex;flex-direction:column;gap:10px}
+.cert-row{display:flex;align-items:center;gap:20px;background:var(--card);border:1px solid var(--border);padding:18px 22px;transition:border-color .25s,transform .25s}
+.cert-row:hover{border-color:rgba(10,240,255,.35);transform:translateX(6px)}
+.cert-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(17,32,48,.8);min-width:28px}
+.cert-name{font-size:15px;font-weight:500;flex:1}
+.cert-prov{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+
+/* EDUCATION */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.edu-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);padding:28px;transition:border-color .25s}
+.edu-card:hover{border-color:rgba(10,240,255,.4)}
+.edu-card.alt{border-left-color:var(--red)}
+.edu-deg{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.04em;margin-bottom:7px}
+.edu-school{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.edu-card.alt .edu-school{color:var(--red)}
+.edu-yr{font-size:13px;color:var(--muted)}
+
+/* LANGUAGES */
+.lang-grid{display:flex;gap:16px;flex-wrap:wrap}
+.lang-card{background:var(--card);border:1px solid var(--border);padding:22px 28px;flex:1;min-width:160px;transition:border-color .25s}
+.lang-card:hover{border-color:rgba(10,240,255,.3)}
+.lang-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.04em;margin-bottom:4px}
+.lang-lvl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+
+/* CONTACT */
+.contact-wrap{background:var(--bg2);border-top:1px solid var(--border);padding:88px 52px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.contact-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5.5vw,76px);line-height:.95;letter-spacing:.03em}
+.contact-big em{font-style:normal;color:var(--accent)}
+.contact-sub{font-size:14px;color:var(--muted);margin-top:18px;line-height:1.75;font-weight:300;margin-bottom:28px}
+.clinks{display:flex;flex-direction:column;gap:10px}
+.clink{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid var(--border);background:var(--card);color:var(--text);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;transition:border-color .25s,color .25s,transform .25s}
+.clink:hover{border-color:var(--accent);color:var(--accent);transform:translateX(8px)}
+.cico{font-size:16px;flex-shrink:0}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify-content:space-between;align-items:center}
+.ft{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+.ft span{color:var(--accent)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:14px 20px}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:100px 20px 60px}
+  .term{display:none}
+  section{padding:60px 20px}
+  .exp-item{grid-template-columns:1fr;gap:12px}
+  .proj-grid,.skills-grid,.edu-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr;padding:60px 20px}
+  footer{flex-direction:column;gap:8px;text-align:center;padding:20px}
+}
+</style>
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">HS <b>//</b> SOC</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="open-badge">Open to Work</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow"><span class="live-dot"></span>Aspiring SOC Analyst · Lucknow, UP, India</div>
+    <h1 class="hname">
+      <span class="l1">Harvinder</span>
+      <span class="l2">Singh</span>
+    </h1>
+    <div class="hero-role">SOC Intern @ CyArt &nbsp;|&nbsp; Blue Team &nbsp;|&nbsp; Threat Detection</div>
+    <p class="hero-bio">Focused on <strong>threat detection, log analysis, and incident response</strong>. I spend my time in labs studying attacker techniques mapped to MITRE ATT&amp;CK — understanding how real attacks happen so defenders can stop them faster.</p>
+    <div class="hbtns">
+      <a href="#contact" class="btn btn-a">Hire Me</a>
+      <a href="https://www.linkedin.com/in/harvinder-singh-soc" target="_blank" class="btn btn-b">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="term">
+    <div class="term-bar">
+      <div class="td r"></div><div class="td y"></div><div class="td g"></div>
+      <span class="tlabel">harvinder@soc ~ threat-hunt</span>
+    </div>
+    <div class="term-body" id="termBody"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="tick-i">Splunk<em>◆</em>SIEM<em>◆</em>MITRE ATT&amp;CK<em>◆</em>Log Analysis<em>◆</em>Wireshark<em>◆</em>ELK Stack<em>◆</em>Blue Team<em>◆</em>Incident Response<em>◆</em>Threat Detection<em>◆</em>Windows Event Logs<em>◆</em>LetsDefend<em>◆</em>TryHackMe<em>◆</em></span>
+    <span class="tick-i">Splunk<em>◆</em>SIEM<em>◆</em>MITRE ATT&amp;CK<em>◆</em>Log Analysis<em>◆</em>Wireshark<em>◆</em>ELK Stack<em>◆</em>Blue Team<em>◆</em>Incident Response<em>◆</em>Threat Detection<em>◆</em>Windows Event Logs<em>◆</em>LetsDefend<em>◆</em>TryHackMe<em>◆</em></span>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-head">
+    <span class="sec-n">01</span>
+    <h2 class="sec-t">Experience</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="exp-item">
+    <div>
+      <div class="exp-date">Mar 2026 – Present</div>
+      <div class="exp-co">CyArt</div>
+      <div class="exp-now">Current</div>
+    </div>
+    <div>
+      <div class="exp-role">SOC Intern</div>
+      <p class="exp-desc">Structured training in security operations and threat monitoring. Building real SOC analyst skills through daily hands-on tasks.</p>
+      <ul class="exp-ul">
+        <li>Daily cybersecurity tasks and practical exercises</li>
+        <li>Threat detection, log analysis &amp; incident investigation fundamentals</li>
+        <li>Exposure to security monitoring concepts used in SOC environments</li>
+        <li>Working on cybersecurity projects to develop practical SOC skills</li>
+      </ul>
+    </div>
+  </div>
+  <div class="exp-item">
+    <div>
+      <div class="exp-date">Nov 2025 – Dec 2025</div>
+      <div class="exp-co">InLighnX Global Pvt. Ltd.</div>
+    </div>
+    <div>
+      <div class="exp-role">Offensive Cyber Security Intern</div>
+      <p class="exp-desc">Designed and built a complete network port-scanning tool from a basic CLI script to a polished desktop application.</p>
+      <ul class="exp-ul">
+        <li>Built multi-threaded TCP port scanner with Tkinter GUI</li>
+        <li>Real-time status updates, color-coded results &amp; progress bar</li>
+        <li>Added IP lookup, input validation &amp; exportable scan results</li>
+        <li>Iterative debugging to improve performance and UX</li>
+      </ul>
+    </div>
+  </div>
+  <div class="exp-item">
+    <div>
+      <div class="exp-date">Nov 2025 – Dec 2025</div>
+      <div class="exp-co">Cyber Protectors</div>
+    </div>
+    <div>
+      <div class="exp-role">Ethical Hacking Intern</div>
+      <p class="exp-desc">Practical Ethical Hacking Program focused on attack techniques and basic web security testing.</p>
+      <ul class="exp-ul">
+        <li>Developed a password pattern weakness detector</li>
+        <li>Built a QR code security risk scanner</li>
+        <li>Created a DoS simulation in a controlled lab environment</li>
+        <li>Web security testing using dirb &amp; vulnerability assessment tools</li>
+        <li>🏆 Received ₹5,000 award for overall performance</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--bg2);border-top:1px solid var(--border)">
+  <div class="sec-head">
+    <span class="sec-n">02</span>
+    <h2 class="sec-t">Projects</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-name">PyCyberSuite</div>
+        <a href="https://github.com/Harvinder-Singh-Soc/PyCyberSuite" target="_blank" class="proj-gh">GitHub ↗</a>
+      </div>
+      <p class="proj-desc">All-in-one Python Cybersecurity Toolkit with a modern Tkinter GUI — built for ethical and educational cybersecurity use.</p>
+      <div class="proj-feats">
+        <div class="proj-feat">Network Scanner (Nmap — open ports &amp; host detection)</div>
+        <div class="proj-feat">Password Strength &amp; Breach Checker</div>
+        <div class="proj-feat">Subdomain Enumerator (wordlist based)</div>
+        <div class="proj-feat">Encryption Toolkit (Symmetric &amp; Asymmetric)</div>
+        <div class="proj-feat">Brute Force &amp; Dictionary Attack Simulator</div>
+        <div class="proj-feat">Secure Auth System + JSON Report Generator</div>
+      </div>
+      <div class="proj-tags">
+        <span class="ptag">Python 3.8+</span><span class="ptag">Tkinter</span>
+        <span class="ptag">python-nmap</span><span class="ptag">Cryptography</span><span class="ptag">Requests</span>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-top"><div class="proj-name">TCP Port Scanner</div></div>
+      <p class="proj-desc">Multi-threaded TCP port scanner evolved from a CLI script to a full desktop app. Built during InLighnX internship.</p>
+      <div class="proj-feats">
+        <div class="proj-feat">Multi-threaded — no UI freezes</div>
+        <div class="proj-feat">Real-time updates &amp; color-coded results</div>
+        <div class="proj-feat">IP lookup, input validation &amp; export</div>
+        <div class="proj-feat">Iterative performance optimization</div>
+      </div>
+      <div class="proj-tags">
+        <span class="ptag">Python</span><span class="ptag">Tkinter</span>
+        <span class="ptag">Threading</span><span class="ptag">Socket</span>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-top"><div class="proj-name">Password Pattern Detector</div></div>
+      <p class="proj-desc">Detects weak and unsafe password patterns to identify vulnerabilities before they become a security risk.</p>
+      <div class="proj-feats">
+        <div class="proj-feat">Pattern-based vulnerability analysis</div>
+        <div class="proj-feat">Weak password structure detection</div>
+        <div class="proj-feat">Security awareness tool</div>
+      </div>
+      <div class="proj-tags">
+        <span class="ptag">Python</span><span class="ptag">Regex</span><span class="ptag">Security Analysis</span>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-top"><div class="proj-name">QR Code Risk Scanner</div></div>
+      <p class="proj-desc">Scans and analyzes QR code content to identify malicious URLs and suspicious patterns hidden behind QR codes.</p>
+      <div class="proj-feats">
+        <div class="proj-feat">Decodes and analyzes QR content</div>
+        <div class="proj-feat">Identifies malicious / suspicious URLs</div>
+        <div class="proj-feat">Risk classification and reporting</div>
+      </div>
+      <div class="proj-tags">
+        <span class="ptag">Python</span><span class="ptag">QR Decode</span><span class="ptag">URL Analysis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-head">
+    <span class="sec-n">03</span>
+    <h2 class="sec-t">Skills &amp; Tools</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-title">SIEM &amp; Log Analysis</div>
+      <div class="skill-tags">
+        <span class="stag">Splunk</span><span class="stag">ELK Stack</span>
+        <span class="stag">Windows Event Logs</span><span class="stag">Linux Logs</span><span class="stag">Log Correlation</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-title">Threat Detection</div>
+      <div class="skill-tags">
+        <span class="stag">MITRE ATT&amp;CK</span><span class="stag">IOC Analysis</span>
+        <span class="stag">Alert Triage</span><span class="stag">Security Monitoring</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-title">Network &amp; Forensics</div>
+      <div class="skill-tags">
+        <span class="stag">Wireshark</span><span class="stag">Network Traffic Analysis</span>
+        <span class="stag">TCP Port Scanning</span><span class="stag">Packet Analysis</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-title">Offensive (for defense)</div>
+      <div class="skill-tags">
+        <span class="stag">Ethical Hacking</span><span class="stag">Vulnerability Assessment</span>
+        <span class="stag">dirb</span><span class="stag">Web Security Testing</span><span class="stag">Python</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs" style="background:var(--bg2);border-top:1px solid var(--border)">
+  <div class="sec-head">
+    <span class="sec-n">04</span>
+    <h2 class="sec-t">Certifications</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="certs-list">
+    <div class="cert-row"><span class="cert-num">01</span><span class="cert-name">Pre Security Certificate</span><span class="cert-prov">TryHackMe</span></div>
+    <div class="cert-row"><span class="cert-num">02</span><span class="cert-name">Job Hunter</span><span class="cert-prov">LetsDefend</span></div>
+    <div class="cert-row"><span class="cert-num">03</span><span class="cert-name">Wireshark Expert</span><span class="cert-prov">LetsDefend</span></div>
+    <div class="cert-row"><span class="cert-num">04</span><span class="cert-name">Network Cable</span><span class="cert-prov">LetsDefend</span></div>
+    <div class="cert-row"><span class="cert-num">05</span><span class="cert-name">XLS Detector</span><span class="cert-prov">LetsDefend</span></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section style="border-top:1px solid var(--border)">
+  <div class="sec-head">
+    <span class="sec-n">05</span>
+    <h2 class="sec-t">Education</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-deg">Bachelor of Computer Applications</div>
+      <div class="edu-school">Chandigarh University</div>
+      <div class="edu-yr">July 2021 – July 2024</div>
+    </div>
+    <div class="edu-card alt">
+      <div class="edu-deg">Diploma in Cyber Security</div>
+      <div class="edu-school">ASD Academy</div>
+      <div class="edu-yr">March 2025 – July 2026 (Ongoing)</div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);padding:64px 52px">
+  <div class="sec-head">
+    <span class="sec-n">06</span>
+    <h2 class="sec-t">Languages</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="lang-grid">
+    <div class="lang-card"><div class="lang-name">Punjabi</div><div class="lang-lvl">Native / Bilingual</div></div>
+    <div class="lang-card"><div class="lang-name">Hindi</div><div class="lang-lvl">Full Professional</div></div>
+    <div class="lang-card"><div class="lang-name">English</div><div class="lang-lvl">Limited Working</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-wrap" id="contact">
+  <div>
+    <div class="contact-big">Let's<br>Work<br><em>Together.</em></div>
+    <p class="contact-sub">Actively looking for a full-time SOC Analyst / Security Analyst role. If you're building a security team and need someone hungry to grow — let's connect.</p>
+    <a href="mailto:officialharvindersingh63@gmail.com" class="btn btn-a" style="display:inline-block">Send Email</a>
+  </div>
+  <div class="clinks">
+    <a href="https://www.linkedin.com/in/harvinder-singh-soc" target="_blank" class="clink"><span class="cico">🔗</span>linkedin.com/in/harvinder-singh-soc</a>
+    <a href="mailto:officialharvindersingh63@gmail.com" class="clink"><span class="cico">✉️</span>officialharvindersingh63@gmail.com</a>
+    <a href="https://github.com/Harvinder-Singh-Soc" target="_blank" class="clink"><span class="cico">💻</span>github.com/Harvinder-Singh-Soc</a>
+    <div class="clink" style="cursor:default"><span class="cico">📍</span>Lucknow, Uttar Pradesh, India</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft"><span>Harvinder Singh</span> — SOC Intern &amp; Aspiring Analyst</div>
+  <div class="ft">© 2026 · All real, no cap 😄</div>
+</footer>
+
+<script>
+// ── CURSOR ──
+var dot  = document.getElementById('cdot');
+var ring = document.getElementById('cring');
+var mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', function(e){
+  mx = e.clientX;
+  my = e.clientY;
+  dot.style.left = (mx - 4.5) + 'px';
+  dot.style.top  = (my - 4.5) + 'px';
+});
+
+(function loop(){
+  rx += (mx - rx) * 0.11;
+  ry += (my - ry) * 0.11;
+  ring.style.left = (rx - 19) + 'px';
+  ring.style.top  = (ry - 19) + 'px';
+  requestAnimationFrame(loop);
+})();
+
+var hov = document.querySelectorAll('a, .cert-row, .proj-card, .skill-card, .edu-card, .lang-card, .clink');
+hov.forEach(function(el){
+  el.addEventListener('mouseenter', function(){
+    ring.style.width  = '54px';
+    ring.style.height = '54px';
+    ring.style.borderColor = 'rgba(10,240,255,.8)';
+    dot.style.width   = '5px';
+    dot.style.height  = '5px';
+    dot.style.background = '#7fff6b';
+  });
+  el.addEventListener('mouseleave', function(){
+    ring.style.width  = '38px';
+    ring.style.height = '38px';
+    ring.style.borderColor = 'rgba(10,240,255,.4)';
+    dot.style.width   = '9px';
+    dot.style.height  = '9px';
+    dot.style.background = '#0af0ff';
+  });
+});
+
+// ── TERMINAL ──
+var LINES = [
+  {t:'cmd', p:'harvinder@soc:~$', c:'whoami'},
+  {t:'out', c:'Harvinder Singh  |  SOC Intern @ CyArt'},
+  {t:'cmd', p:'harvinder@soc:~$', c:'cat focus.txt'},
+  {t:'acc', c:'→ Threat Detection & Log Analysis'},
+  {t:'acc', c:'→ SIEM: Splunk / ELK Stack'},
+  {t:'acc', c:'→ MITRE ATT&CK Framework'},
+  {t:'cmd', p:'harvinder@soc:~$', c:'status --hiring'},
+  {t:'warn',c:'[!] Actively seeking SOC Analyst roles'},
+  {t:'cmd', p:'harvinder@soc:~$', c:'ping recruiter'},
+  {t:'ok',  c:'[✓] Ready to deploy. Let\'s connect!'},
+  {t:'cmd', p:'harvinder@soc:~$', c:''}
+];
+
+var tb = document.getElementById('termBody');
+var li = 0, ci = 0;
+
+function typeIt(){
+  if(li >= LINES.length){
+    setTimeout(function(){ tb.innerHTML = ''; li = 0; ci = 0; typeIt(); }, 3000);
+    return;
+  }
+  var line = LINES[li];
+  var row = tb.querySelector('.cur-row');
+  if(!row){
+    row = document.createElement('div');
+    row.className = 'trow cur-row';
+    if(line.t === 'cmd'){
+      var pr = document.createElement('span');
+      pr.className = 'tp';
+      pr.textContent = line.p;
+      row.appendChild(pr);
+    }
+    var sp = document.createElement('span');
+    sp.className = line.t==='cmd'?'tc': line.t==='acc'?'ta': line.t==='warn'?'tw': line.t==='ok'?'ts':'to';
+    row.appendChild(sp);
+    tb.appendChild(row);
+    tb.scrollTop = tb.scrollHeight;
+  }
+  var sp = row.querySelector('span:last-child');
+  var full = (line.t === 'cmd') ? ' ' + line.c : line.c;
+  if(ci < full.length){
+    sp.textContent = full.slice(0, ci + 1);
+    ci++;
+    setTimeout(typeIt, line.t === 'cmd' ? 58 : 18);
+  } else {
+    if(li === LINES.length - 1){
+      var bc = document.createElement('span');
+      bc.className = 'tcur';
+      row.appendChild(bc);
+    }
+    row.classList.remove('cur-row');
+    li++; ci = 0;
+    setTimeout(typeIt, line.t === 'cmd' ? 400 : 90);
+  }
+}
+setTimeout(typeIt, 700);
+</script>
+</body>
+</html>
