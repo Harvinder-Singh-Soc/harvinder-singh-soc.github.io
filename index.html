@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harvinder Singh — SOC Analyst</title>
+<link id="fav" rel="icon" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -16,12 +17,10 @@
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;cursor:none}
 
-/* CURSOR */
-#cdot{position:fixed;top:0;left:0;width:9px;height:9px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transition:width .15s,height .15s,background .15s}
-#cring{position:fixed;top:0;left:0;width:38px;height:38px;border:1.5px solid rgba(10,240,255,.4);border-radius:50%;pointer-events:none;z-index:9998;transition:width .25s,height .25s,border-color .25s}
+#cdot{position:fixed;top:0;left:0;width:9px;height:9px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;will-change:transform;transition:width .15s,height .15s,background .15s}
+#cring{position:fixed;top:0;left:0;width:38px;height:38px;border:1.5px solid rgba(10,240,255,.45);border-radius:50%;pointer-events:none;z-index:9998;will-change:transform;transition:width .22s,height .22s,border-color .22s}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:16px 52px;background:rgba(3,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:16px 52px;background:rgba(3,7,10,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .logo{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.16em}
 .logo b{color:var(--text);font-weight:400}
 .nav-links{display:flex;gap:28px;list-style:none}
@@ -30,7 +29,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content
 .open-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);border:1px solid var(--green);padding:7px 16px;letter-spacing:.15em;text-transform:uppercase;animation:gpulse 2.5s ease infinite}
 @keyframes gpulse{0%,100%{box-shadow:0 0 0 0 rgba(127,255,107,.3)}50%{box-shadow:0 0 0 7px rgba(127,255,107,0)}}
 
-/* HERO */
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 440px;gap:60px;align-items:center;padding:120px 52px 80px;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(10,240,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(10,240,255,.03) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 70% 70% at 75% 50%,#000 30%,transparent 100%);pointer-events:none}
 .hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:.22em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:10px}
@@ -49,7 +47,6 @@ h1.hname .l2{display:block;color:transparent;-webkit-text-stroke:2px var(--accen
 .btn-b{border:1px solid var(--border);color:var(--muted);background:transparent}
 .btn-b:hover{border-color:var(--accent);color:var(--accent)}
 
-/* TERMINAL */
 .term{background:var(--card);border:1px solid var(--border);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6);position:relative;z-index:2}
 .term-bar{background:var(--surface);padding:10px 16px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--border)}
 .td{width:9px;height:9px;border-radius:50%}
@@ -62,21 +59,18 @@ h1.hname .l2{display:block;color:transparent;-webkit-text-stroke:2px var(--accen
 .tcur{display:inline-block;width:7px;height:13px;background:var(--accent);animation:cblink 1s step-end infinite;vertical-align:middle;margin-left:2px}
 @keyframes cblink{50%{opacity:0}}
 
-/* TICKER */
 .ticker-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(10,240,255,.04);padding:10px 0}
 .ticker-track{display:flex;white-space:nowrap;animation:ticker 28s linear infinite}
 .tick-i{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.18em;text-transform:uppercase;padding:0 32px}
 .tick-i em{color:rgba(10,240,255,.25);font-style:normal;margin:0 10px}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* SECTIONS */
 section{padding:88px 52px}
 .sec-head{display:flex;align-items:center;gap:16px;margin-bottom:52px}
 .sec-n{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--red);letter-spacing:.14em}
 .sec-t{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:.04em}
 .sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
 
-/* EXPERIENCE */
 .exp-item{display:grid;grid-template-columns:190px 1fr;border-bottom:1px solid var(--border);padding:36px 0}
 .exp-item:last-child{border-bottom:none}
 .exp-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
@@ -88,7 +82,6 @@ section{padding:88px 52px}
 .exp-ul li{font-size:13px;color:var(--muted);font-weight:300;padding-left:18px;position:relative;line-height:1.6}
 .exp-ul li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:11px}
 
-/* PROJECTS */
 .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .proj-card{background:var(--card);border:1px solid var(--border);padding:28px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
 .proj-card:hover{border-color:rgba(10,240,255,.4);transform:translateY(-3px)}
@@ -105,7 +98,6 @@ section{padding:88px 52px}
 .proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .ptag{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 9px;background:rgba(10,240,255,.05);border:1px solid rgba(10,240,255,.15);color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
 
-/* SKILLS */
 .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
 .skill-card{background:var(--card);padding:28px;transition:background .25s;position:relative;overflow:hidden}
 .skill-card:hover{background:#0b1720}
@@ -116,15 +108,13 @@ section{padding:88px 52px}
 .stag{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:4px 10px;border:1px solid var(--border);color:var(--muted);letter-spacing:.08em;text-transform:uppercase;transition:border-color .2s,color .2s}
 .skill-card:hover .stag{border-color:rgba(10,240,255,.25);color:var(--accent)}
 
-/* CERTS */
 .certs-list{display:flex;flex-direction:column;gap:10px}
 .cert-row{display:flex;align-items:center;gap:20px;background:var(--card);border:1px solid var(--border);padding:18px 22px;transition:border-color .25s,transform .25s}
 .cert-row:hover{border-color:rgba(10,240,255,.35);transform:translateX(6px)}
-.cert-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(17,32,48,.8);min-width:28px}
+.cert-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--border);min-width:28px}
 .cert-name{font-size:15px;font-weight:500;flex:1}
 .cert-prov{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
 
-/* EDUCATION */
 .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .edu-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);padding:28px;transition:border-color .25s}
 .edu-card:hover{border-color:rgba(10,240,255,.4)}
@@ -134,14 +124,12 @@ section{padding:88px 52px}
 .edu-card.alt .edu-school{color:var(--red)}
 .edu-yr{font-size:13px;color:var(--muted)}
 
-/* LANGUAGES */
 .lang-grid{display:flex;gap:16px;flex-wrap:wrap}
 .lang-card{background:var(--card);border:1px solid var(--border);padding:22px 28px;flex:1;min-width:160px;transition:border-color .25s}
 .lang-card:hover{border-color:rgba(10,240,255,.3)}
 .lang-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.04em;margin-bottom:4px}
 .lang-lvl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
 
-/* CONTACT */
 .contact-wrap{background:var(--bg2);border-top:1px solid var(--border);padding:88px 52px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
 .contact-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5.5vw,76px);line-height:.95;letter-spacing:.03em}
 .contact-big em{font-style:normal;color:var(--accent)}
@@ -151,12 +139,10 @@ section{padding:88px 52px}
 .clink:hover{border-color:var(--accent);color:var(--accent);transform:translateX(8px)}
 .cico{font-size:16px;flex-shrink:0}
 
-/* FOOTER */
 footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify-content:space-between;align-items:center}
 .ft{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
 .ft span{color:var(--accent)}
 
-/* RESPONSIVE */
 @media(max-width:960px){
   nav{padding:14px 20px}
   .nav-links{display:none}
@@ -175,7 +161,6 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
 <div id="cdot"></div>
 <div id="cring"></div>
 
-<!-- NAV -->
 <nav>
   <div class="logo">HS <b>//</b> SOC</div>
   <ul class="nav-links">
@@ -188,7 +173,6 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
   <div class="open-badge">Open to Work</div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div>
     <div class="hero-eyebrow"><span class="live-dot"></span>Aspiring SOC Analyst · Lucknow, UP, India</div>
@@ -212,20 +196,16 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
   </div>
 </section>
 
-<!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-track">
-    <span class="tick-i">Splunk<em>◆</em>SIEM<em>◆</em>MITRE ATT&amp;CK<em>◆</em>Log Analysis<em>◆</em>Wireshark<em>◆</em>ELK Stack<em>◆</em>Blue Team<em>◆</em>Incident Response<em>◆</em>Threat Detection<em>◆</em>Windows Event Logs<em>◆</em>LetsDefend<em>◆</em>TryHackMe<em>◆</em></span>
-    <span class="tick-i">Splunk<em>◆</em>SIEM<em>◆</em>MITRE ATT&amp;CK<em>◆</em>Log Analysis<em>◆</em>Wireshark<em>◆</em>ELK Stack<em>◆</em>Blue Team<em>◆</em>Incident Response<em>◆</em>Threat Detection<em>◆</em>Windows Event Logs<em>◆</em>LetsDefend<em>◆</em>TryHackMe<em>◆</em></span>
+    <span class="tick-i">Splunk<em>◆</em>SIEM<em>◆</em>MITRE ATT&amp;CK<em>◆</em>Log Analysis<em>◆</em>Wireshark<em>◆</em>ELK Stack<em>◆</em>Blue Team<em>◆</em>Incident Response<em>◆</em>Threat Detection<em>◆</em>LetsDefend<em>◆</em>TryHackMe<em>◆</em></span>
+    <span class="tick-i">Splunk<em>◆</em>SIEM<em>◆</em>MITRE ATT&amp;CK<em>◆</em>Log Analysis<em>◆</em>Wireshark<em>◆</em>ELK Stack<em>◆</em>Blue Team<em>◆</em>Incident Response<em>◆</em>Threat Detection<em>◆</em>LetsDefend<em>◆</em>TryHackMe<em>◆</em></span>
   </div>
 </div>
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <div class="sec-head">
-    <span class="sec-n">01</span>
-    <h2 class="sec-t">Experience</h2>
-    <div class="sec-line"></div>
+    <span class="sec-n">01</span><h2 class="sec-t">Experience</h2><div class="sec-line"></div>
   </div>
   <div class="exp-item">
     <div>
@@ -235,7 +215,7 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
     </div>
     <div>
       <div class="exp-role">SOC Intern</div>
-      <p class="exp-desc">Structured training in security operations and threat monitoring. Building real SOC analyst skills through daily hands-on tasks.</p>
+      <p class="exp-desc">Structured training in security operations and threat monitoring. Building real SOC skills through daily hands-on tasks.</p>
       <ul class="exp-ul">
         <li>Daily cybersecurity tasks and practical exercises</li>
         <li>Threat detection, log analysis &amp; incident investigation fundamentals</li>
@@ -279,12 +259,9 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects" style="background:var(--bg2);border-top:1px solid var(--border)">
   <div class="sec-head">
-    <span class="sec-n">02</span>
-    <h2 class="sec-t">Projects</h2>
-    <div class="sec-line"></div>
+    <span class="sec-n">02</span><h2 class="sec-t">Projects</h2><div class="sec-line"></div>
   </div>
   <div class="proj-grid">
     <div class="proj-card">
@@ -292,7 +269,7 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
         <div class="proj-name">PyCyberSuite</div>
         <a href="https://github.com/Harvinder-Singh-Soc/PyCyberSuite" target="_blank" class="proj-gh">GitHub ↗</a>
       </div>
-      <p class="proj-desc">All-in-one Python Cybersecurity Toolkit with a modern Tkinter GUI — built for ethical and educational cybersecurity use.</p>
+      <p class="proj-desc">All-in-one Python Cybersecurity Toolkit with a modern Tkinter GUI — built for ethical and educational use.</p>
       <div class="proj-feats">
         <div class="proj-feat">Network Scanner (Nmap — open ports &amp; host detection)</div>
         <div class="proj-feat">Password Strength &amp; Breach Checker</div>
@@ -302,13 +279,12 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
         <div class="proj-feat">Secure Auth System + JSON Report Generator</div>
       </div>
       <div class="proj-tags">
-        <span class="ptag">Python 3.8+</span><span class="ptag">Tkinter</span>
-        <span class="ptag">python-nmap</span><span class="ptag">Cryptography</span><span class="ptag">Requests</span>
+        <span class="ptag">Python 3.8+</span><span class="ptag">Tkinter</span><span class="ptag">python-nmap</span><span class="ptag">Cryptography</span>
       </div>
     </div>
     <div class="proj-card">
       <div class="proj-top"><div class="proj-name">TCP Port Scanner</div></div>
-      <p class="proj-desc">Multi-threaded TCP port scanner evolved from a CLI script to a full desktop app. Built during InLighnX internship.</p>
+      <p class="proj-desc">Multi-threaded TCP port scanner evolved from CLI script to a full desktop app. Built during InLighnX internship.</p>
       <div class="proj-feats">
         <div class="proj-feat">Multi-threaded — no UI freezes</div>
         <div class="proj-feat">Real-time updates &amp; color-coded results</div>
@@ -316,8 +292,7 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
         <div class="proj-feat">Iterative performance optimization</div>
       </div>
       <div class="proj-tags">
-        <span class="ptag">Python</span><span class="ptag">Tkinter</span>
-        <span class="ptag">Threading</span><span class="ptag">Socket</span>
+        <span class="ptag">Python</span><span class="ptag">Tkinter</span><span class="ptag">Threading</span><span class="ptag">Socket</span>
       </div>
     </div>
     <div class="proj-card">
@@ -347,51 +322,41 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
   <div class="sec-head">
-    <span class="sec-n">03</span>
-    <h2 class="sec-t">Skills &amp; Tools</h2>
-    <div class="sec-line"></div>
+    <span class="sec-n">03</span><h2 class="sec-t">Skills &amp; Tools</h2><div class="sec-line"></div>
   </div>
   <div class="skills-grid">
     <div class="skill-card">
       <div class="skill-title">SIEM &amp; Log Analysis</div>
       <div class="skill-tags">
-        <span class="stag">Splunk</span><span class="stag">ELK Stack</span>
-        <span class="stag">Windows Event Logs</span><span class="stag">Linux Logs</span><span class="stag">Log Correlation</span>
+        <span class="stag">Splunk</span><span class="stag">ELK Stack</span><span class="stag">Windows Event Logs</span><span class="stag">Linux Logs</span><span class="stag">Log Correlation</span>
       </div>
     </div>
     <div class="skill-card">
       <div class="skill-title">Threat Detection</div>
       <div class="skill-tags">
-        <span class="stag">MITRE ATT&amp;CK</span><span class="stag">IOC Analysis</span>
-        <span class="stag">Alert Triage</span><span class="stag">Security Monitoring</span>
+        <span class="stag">MITRE ATT&amp;CK</span><span class="stag">IOC Analysis</span><span class="stag">Alert Triage</span><span class="stag">Security Monitoring</span>
       </div>
     </div>
     <div class="skill-card">
       <div class="skill-title">Network &amp; Forensics</div>
       <div class="skill-tags">
-        <span class="stag">Wireshark</span><span class="stag">Network Traffic Analysis</span>
-        <span class="stag">TCP Port Scanning</span><span class="stag">Packet Analysis</span>
+        <span class="stag">Wireshark</span><span class="stag">Network Traffic Analysis</span><span class="stag">TCP Port Scanning</span><span class="stag">Packet Analysis</span>
       </div>
     </div>
     <div class="skill-card">
       <div class="skill-title">Offensive (for defense)</div>
       <div class="skill-tags">
-        <span class="stag">Ethical Hacking</span><span class="stag">Vulnerability Assessment</span>
-        <span class="stag">dirb</span><span class="stag">Web Security Testing</span><span class="stag">Python</span>
+        <span class="stag">Ethical Hacking</span><span class="stag">Vulnerability Assessment</span><span class="stag">dirb</span><span class="stag">Web Security Testing</span><span class="stag">Python</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CERTS -->
 <section id="certs" style="background:var(--bg2);border-top:1px solid var(--border)">
   <div class="sec-head">
-    <span class="sec-n">04</span>
-    <h2 class="sec-t">Certifications</h2>
-    <div class="sec-line"></div>
+    <span class="sec-n">04</span><h2 class="sec-t">Certifications</h2><div class="sec-line"></div>
   </div>
   <div class="certs-list">
     <div class="cert-row"><span class="cert-num">01</span><span class="cert-name">Pre Security Certificate</span><span class="cert-prov">TryHackMe</span></div>
@@ -402,12 +367,9 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
   </div>
 </section>
 
-<!-- EDUCATION -->
 <section style="border-top:1px solid var(--border)">
   <div class="sec-head">
-    <span class="sec-n">05</span>
-    <h2 class="sec-t">Education</h2>
-    <div class="sec-line"></div>
+    <span class="sec-n">05</span><h2 class="sec-t">Education</h2><div class="sec-line"></div>
   </div>
   <div class="edu-grid">
     <div class="edu-card">
@@ -423,12 +385,9 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
   </div>
 </section>
 
-<!-- LANGUAGES -->
 <section style="background:var(--bg2);border-top:1px solid var(--border);padding:64px 52px">
   <div class="sec-head">
-    <span class="sec-n">06</span>
-    <h2 class="sec-t">Languages</h2>
-    <div class="sec-line"></div>
+    <span class="sec-n">06</span><h2 class="sec-t">Languages</h2><div class="sec-line"></div>
   </div>
   <div class="lang-grid">
     <div class="lang-card"><div class="lang-name">Punjabi</div><div class="lang-lvl">Native / Bilingual</div></div>
@@ -437,126 +396,140 @@ footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;justify
   </div>
 </section>
 
-<!-- CONTACT -->
 <div class="contact-wrap" id="contact">
   <div>
     <div class="contact-big">Let's<br>Work<br><em>Together.</em></div>
-    <p class="contact-sub">Actively looking for a full-time SOC Analyst / Security Analyst role. If you're building a security team and need someone hungry to grow — let's connect.</p>
-    <a href="mailto:officialharvindersingh63@gmail.com" class="btn btn-a" style="display:inline-block">Send Email</a>
+    <p class="contact-sub">Actively looking for a SOC Analyst / Security Analyst role. If you're building a security team and need someone hungry to grow — let's connect.</p>
+    <a id="btnEmail" href="#" class="btn btn-a" style="display:inline-block">Send Email</a>
   </div>
   <div class="clinks">
     <a href="https://www.linkedin.com/in/harvinder-singh-soc" target="_blank" class="clink"><span class="cico">🔗</span>linkedin.com/in/harvinder-singh-soc</a>
-    <a href="mailto:officialharvindersingh63@gmail.com" class="clink"><span class="cico">✉️</span>officialharvindersingh63@gmail.com</a>
+    <a id="lnkEmail" href="#" class="clink"><span class="cico">✉️</span>officialharvindersingh63@gmail.com</a>
     <a href="https://github.com/Harvinder-Singh-Soc" target="_blank" class="clink"><span class="cico">💻</span>github.com/Harvinder-Singh-Soc</a>
     <div class="clink" style="cursor:default"><span class="cico">📍</span>Lucknow, Uttar Pradesh, India</div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="ft"><span>Harvinder Singh</span> — SOC Intern &amp; Aspiring Analyst</div>
   <div class="ft">© 2026 · All real, no cap 😄</div>
 </footer>
 
 <script>
+// ── FAVICON — Canvas PNG (works in ALL browsers) ──
+(function(){
+  var cv = document.createElement('canvas');
+  cv.width = 64; cv.height = 64;
+  var cx = cv.getContext('2d');
+  // rounded rect helper
+  function rr(x,y,w,h,r){
+    cx.beginPath();
+    cx.moveTo(x+r,y);
+    cx.lineTo(x+w-r,y);
+    cx.arcTo(x+w,y,x+w,y+r,r);
+    cx.lineTo(x+w,y+h-r);
+    cx.arcTo(x+w,y+h,x+w-r,y+h,r);
+    cx.lineTo(x+r,y+h);
+    cx.arcTo(x,y+h,x,y+h-r,r);
+    cx.lineTo(x,y+r);
+    cx.arcTo(x,y,x+r,y,r);
+    cx.closePath();
+  }
+  // background
+  cx.fillStyle = '#03070a';
+  rr(0,0,64,64,10); cx.fill();
+  // cyan border
+  cx.strokeStyle = '#0af0ff';
+  cx.lineWidth = 3;
+  rr(2,2,60,60,8); cx.stroke();
+  // HS text
+  cx.fillStyle = '#0af0ff';
+  cx.font = '900 26px monospace';
+  cx.textAlign = 'center';
+  cx.textBaseline = 'middle';
+  cx.fillText('HS', 32, 33);
+  // apply
+  document.getElementById('fav').href = cv.toDataURL('image/png');
+})();
+
+// ── EMAIL — built in JS so no encoder breaks it ──
+(function(){
+  var e = 'officialharvindersingh63' + '@' + 'gmail.com';
+  var g = 'https://mail.google.com/mail/?view=cm&to=' + e;
+  var btn = document.getElementById('btnEmail');
+  var lnk = document.getElementById('lnkEmail');
+  if(btn){ btn.href = g; }
+  if(lnk){ lnk.href = g; }
+})();
+
 // ── CURSOR ──
 var dot  = document.getElementById('cdot');
 var ring = document.getElementById('cring');
-var mx = 0, my = 0, rx = 0, ry = 0;
+var mx = window.innerWidth/2, my = window.innerHeight/2;
+var rx = mx, ry = my;
 
 document.addEventListener('mousemove', function(e){
-  mx = e.clientX;
-  my = e.clientY;
-  dot.style.left = (mx - 4.5) + 'px';
-  dot.style.top  = (my - 4.5) + 'px';
+  mx = e.clientX; my = e.clientY;
+  dot.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
 });
 
 (function loop(){
-  rx += (mx - rx) * 0.11;
-  ry += (my - ry) * 0.11;
-  ring.style.left = (rx - 19) + 'px';
-  ring.style.top  = (ry - 19) + 'px';
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
   requestAnimationFrame(loop);
 })();
 
-var hov = document.querySelectorAll('a, .cert-row, .proj-card, .skill-card, .edu-card, .lang-card, .clink');
-hov.forEach(function(el){
+document.querySelectorAll('a,.cert-row,.proj-card,.skill-card,.edu-card,.lang-card,.open-badge').forEach(function(el){
   el.addEventListener('mouseenter', function(){
-    ring.style.width  = '54px';
-    ring.style.height = '54px';
-    ring.style.borderColor = 'rgba(10,240,255,.8)';
-    dot.style.width   = '5px';
-    dot.style.height  = '5px';
-    dot.style.background = '#7fff6b';
+    ring.style.width='54px'; ring.style.height='54px';
+    ring.style.borderColor='rgba(10,240,255,.9)';
+    dot.style.width='5px'; dot.style.height='5px';
+    dot.style.background='#7fff6b';
   });
   el.addEventListener('mouseleave', function(){
-    ring.style.width  = '38px';
-    ring.style.height = '38px';
-    ring.style.borderColor = 'rgba(10,240,255,.4)';
-    dot.style.width   = '9px';
-    dot.style.height  = '9px';
-    dot.style.background = '#0af0ff';
+    ring.style.width='38px'; ring.style.height='38px';
+    ring.style.borderColor='rgba(10,240,255,.45)';
+    dot.style.width='9px'; dot.style.height='9px';
+    dot.style.background='#0af0ff';
   });
 });
 
 // ── TERMINAL ──
 var LINES = [
-  {t:'cmd', p:'harvinder@soc:~$', c:'whoami'},
-  {t:'out', c:'Harvinder Singh  |  SOC Intern @ CyArt'},
-  {t:'cmd', p:'harvinder@soc:~$', c:'cat focus.txt'},
-  {t:'acc', c:'→ Threat Detection & Log Analysis'},
-  {t:'acc', c:'→ SIEM: Splunk / ELK Stack'},
-  {t:'acc', c:'→ MITRE ATT&CK Framework'},
-  {t:'cmd', p:'harvinder@soc:~$', c:'status --hiring'},
+  {t:'cmd',p:'harvinder@soc:~$',c:'whoami'},
+  {t:'out',c:'Harvinder Singh  |  SOC Intern @ CyArt'},
+  {t:'cmd',p:'harvinder@soc:~$',c:'cat focus.txt'},
+  {t:'acc',c:'→ Threat Detection & Log Analysis'},
+  {t:'acc',c:'→ SIEM: Splunk / ELK Stack'},
+  {t:'acc',c:'→ MITRE ATT&CK Framework'},
+  {t:'cmd',p:'harvinder@soc:~$',c:'status --hiring'},
   {t:'warn',c:'[!] Actively seeking SOC Analyst roles'},
-  {t:'cmd', p:'harvinder@soc:~$', c:'ping recruiter'},
-  {t:'ok',  c:'[✓] Ready to deploy. Let\'s connect!'},
-  {t:'cmd', p:'harvinder@soc:~$', c:''}
+  {t:'cmd',p:'harvinder@soc:~$',c:'ping recruiter'},
+  {t:'ok',c:"[✓] Ready to deploy. Let's connect!"},
+  {t:'cmd',p:'harvinder@soc:~$',c:''}
 ];
-
-var tb = document.getElementById('termBody');
-var li = 0, ci = 0;
-
+var tb=document.getElementById('termBody'), li=0, ci=0;
 function typeIt(){
-  if(li >= LINES.length){
-    setTimeout(function(){ tb.innerHTML = ''; li = 0; ci = 0; typeIt(); }, 3000);
-    return;
-  }
-  var line = LINES[li];
-  var row = tb.querySelector('.cur-row');
+  if(li>=LINES.length){ setTimeout(function(){tb.innerHTML='';li=0;ci=0;typeIt();},3000); return; }
+  var line=LINES[li], row=tb.querySelector('.cur-row');
   if(!row){
-    row = document.createElement('div');
-    row.className = 'trow cur-row';
-    if(line.t === 'cmd'){
-      var pr = document.createElement('span');
-      pr.className = 'tp';
-      pr.textContent = line.p;
-      row.appendChild(pr);
-    }
-    var sp = document.createElement('span');
-    sp.className = line.t==='cmd'?'tc': line.t==='acc'?'ta': line.t==='warn'?'tw': line.t==='ok'?'ts':'to';
-    row.appendChild(sp);
-    tb.appendChild(row);
-    tb.scrollTop = tb.scrollHeight;
+    row=document.createElement('div'); row.className='trow cur-row';
+    if(line.t==='cmd'){ var pr=document.createElement('span'); pr.className='tp'; pr.textContent=line.p; row.appendChild(pr); }
+    var sp=document.createElement('span');
+    sp.className=line.t==='cmd'?'tc':line.t==='acc'?'ta':line.t==='warn'?'tw':line.t==='ok'?'ts':'to';
+    row.appendChild(sp); tb.appendChild(row); tb.scrollTop=tb.scrollHeight;
   }
-  var sp = row.querySelector('span:last-child');
-  var full = (line.t === 'cmd') ? ' ' + line.c : line.c;
-  if(ci < full.length){
-    sp.textContent = full.slice(0, ci + 1);
-    ci++;
-    setTimeout(typeIt, line.t === 'cmd' ? 58 : 18);
-  } else {
-    if(li === LINES.length - 1){
-      var bc = document.createElement('span');
-      bc.className = 'tcur';
-      row.appendChild(bc);
-    }
-    row.classList.remove('cur-row');
-    li++; ci = 0;
-    setTimeout(typeIt, line.t === 'cmd' ? 400 : 90);
+  var sp=row.querySelector('span:last-child');
+  var full=(line.t==='cmd')?' '+line.c:line.c;
+  if(ci<full.length){ sp.textContent=full.slice(0,ci+1); ci++; setTimeout(typeIt,line.t==='cmd'?58:18); }
+  else{
+    if(li===LINES.length-1){ var bc=document.createElement('span'); bc.className='tcur'; row.appendChild(bc); }
+    row.classList.remove('cur-row'); li++; ci=0;
+    setTimeout(typeIt,line.t==='cmd'?400:90);
   }
 }
-setTimeout(typeIt, 700);
+setTimeout(typeIt,700);
 </script>
 </body>
 </html>
